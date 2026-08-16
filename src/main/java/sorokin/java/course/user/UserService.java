@@ -1,20 +1,15 @@
 package sorokin.java.course.user;
 
 import org.springframework.stereotype.Component;
-import sorokin.java.course.account.AccountService;
 import sorokin.java.course.repository.UserRepository;
-import sorokin.java.course.user.User;
 
 import java.util.*;
 
 @Component
 public class UserService {
-
-    private final AccountService accountService;
     private final UserRepository userRepository;
 
-    public UserService(AccountService accountService, UserRepository userRepository) {
-        this.accountService = accountService;
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -28,12 +23,6 @@ public class UserService {
         user.setLogin(normalizedLogin);
 
         userRepository.save(user);
-
-//        var defaultAccount = accountService.createAccount(user);
-//        user.getAccountList().add(defaultAccount);
-
-//        userMap.put(idCounter, user);
-//        takenLogins.add(normalizedLogin);
         return user;
     }
 
