@@ -1,33 +1,53 @@
 package sorokin.java.course.account;
 
+import jakarta.persistence.*;
+import sorokin.java.course.user.User;
+
+import java.math.BigDecimal;
+
+@Entity
+@Table(name = "accounts")
 public class Account {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private final int id;
-    private final int userId;
-    private int moneyAmount;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    public Account(int id, int userId, int moneyAmount) {
-        this.id = id;
-        this.userId = userId;
+    @Column(name = "money_amount", nullable = false)
+    private BigDecimal moneyAmount;
+
+    public Account() {
+    }
+
+    public Account(User user, BigDecimal moneyAmount) {
+        this.user = user;
         this.moneyAmount = moneyAmount;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public int getUserId() {
-        return userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public int getMoneyAmount() {
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public BigDecimal getMoneyAmount() {
         return moneyAmount;
     }
 
-    public void setMoneyAmount(int moneyAmount) {
-        if (moneyAmount < 0) {
-            throw new IllegalArgumentException("Attempted to set moneyAmount less than 0");
-        }
+    public void setMoneyAmount(BigDecimal moneyAmount) {
         this.moneyAmount = moneyAmount;
     }
 
@@ -35,8 +55,6 @@ public class Account {
     public String toString() {
         return "Account{" +
                 "id=" + id +
-                ", userId=" + userId +
-                ", moneyAmount=" + moneyAmount +
-                '}';
+                ", moneyAmount=" + moneyAmount + '}';
     }
 }
