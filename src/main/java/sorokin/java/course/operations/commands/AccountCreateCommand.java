@@ -26,7 +26,6 @@ public class AccountCreateCommand implements OperationCommand {
         int userId = consoleInput.readPositiveInt("Enter user id:", "user id");
         var user = userService.findUserById(userId);
         Account account = accountService.createAccount(user);
-        user.getAccountList().add(account);
         System.out.println("Account created: " + account);
     }
 
